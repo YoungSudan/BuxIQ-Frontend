@@ -30,7 +30,7 @@ export default function DashboardPage() {
       const response = await axios.get('http://127.0.0.1:3001/accounts/test');
 
       // Handle the response data as needed
-      console.log('Response:', response.data);
+      //console.log('Response:', response.data);
       setMoney(response.data.money)
     } catch (error: any) {
       // Handle any errors that occurred during the request
