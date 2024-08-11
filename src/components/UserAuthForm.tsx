@@ -7,7 +7,8 @@ import { ReloadIcon } from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui//input"
 import { Label } from "@/components/ui/label"
-import { register } from "@/lib/auth"
+import { register, login } from "@/lib/auth"
+import { useRouter } from 'next/navigation';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -15,19 +16,21 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const router = useRouter();
 
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    
-    const res = await register({
+
+    const res = await login({
         user: {
           email: email,
           password: password,
-          password_confirmation: password,
         }
       })
-
+    
+    router.push('/')
+    
     setTimeout(() => {
       setIsLoading(false)
     }, 3000)

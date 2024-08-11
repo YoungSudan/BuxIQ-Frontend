@@ -11,9 +11,6 @@ export default function AccountList() {
     try {
       // Make the GET request using Axios
       const response = await axios.get('http://127.0.0.1:3001/accounts');
-
-      // Handle the response data as needed
-      console.log('Response:', response.data);
       setAccounts(response.data)
     } catch (error: any) {
       // Handle any errors that occurred during the request
@@ -25,7 +22,7 @@ export default function AccountList() {
     return (
       <div className="flex items-center gap-4 my-5">
         <Avatar className="hidden h-9 w-9 sm:flex">
-          <AvatarImage src="/avatars/01.png" alt="Avatar" />
+          {/* <AvatarImage src="/avatars/01.png" alt="Avatar" /> */}
           <AvatarFallback>AC</AvatarFallback>
         </Avatar>
         <div className="grid gap-1">
@@ -43,9 +40,9 @@ export default function AccountList() {
     )
   }
 
-  useEffect(() => {
-    getAccounts()
-  }, [])
+  // useEffect(() => {
+  //   getAccounts()
+  // }, [])
 
   return (
       <Card>

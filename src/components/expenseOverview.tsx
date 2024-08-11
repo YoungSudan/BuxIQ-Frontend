@@ -17,7 +17,6 @@ export function ExpenseOverview() {
           const response = await axios.get('http://127.0.0.1:3001/accounts');
     
           // Handle the response data as needed
-          console.log('Response:', response.data);
           setCategories(response.data.accounts)
         } catch (error: any) {
           // Handle any errors that occurred during the request
@@ -25,9 +24,9 @@ export function ExpenseOverview() {
         }
       }
     
-      useEffect(() => {
-        getCategories()
-      }, [])
+      // useEffect(() => {
+      //   getCategories()
+      // }, [])
 
       const progressPercentage = Math.max((65.00 / 100.00) * 100, 0);
     return (

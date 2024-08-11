@@ -3,17 +3,18 @@
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 const axios = require('axios');
-import { ScrollArea } from "@/components/ui/scroll-area"
 
-export function RecentSales() {
+export function RecentTransactions() {
   const [data, setData] = useState([])
 
   const getTransactions = async () => {
-    const res = await axios.get('http://localhost:3001/transactions')
-    console.log(res)
+    const res = await axios.get('http://localhost:3001/api/v1/transactions',{
+      headers: {
+        'Authorization': localStorage.getItem('authToken')
+      }
+    })
 
     setData(res.data)
-    console.log(data)
   }
 
   useEffect(() => {

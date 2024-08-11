@@ -2,7 +2,7 @@
 import { CalendarDateRangePicker } from "@/components/date-range-picker"
 
 import { Overview } from "@/components/overview"
-import { RecentSales } from "@/components/recent-sales"
+import { RecentTransactions } from "@/components/recent-transactions"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -21,34 +21,46 @@ import AccountSummary from "@/components/accountsSummary"
 // import { Search } from "@/components/search"
 
 export default function DashboardPage() {
-  const [money, setMoney] = useState(0)
+  const [accounts, setAccounts] = useState([])
+  const [transactions, setTransactions] = useState([])
+  const [categories, setCategories] = useState([])
+
   const [cash, setCash] = useState(0)
+  const [debt, setDebt] = useState(0)
 
-  async function getTestAccount() {
+
+  async function getAccounts() {
     try {
-      // Make the GET request using Axios
-      const response = await axios.get('http://127.0.0.1:3001/accounts/test');
-
-      // Handle the response data as needed
-      //console.log('Response:', response.data);
-      setMoney(response.data.money)
+      const response = await axios.get('http://127.0.0.1:3001/api/v1/accounts');
+      setAccounts(response.data.accounts)
     } catch (error: any) {
       // Handle any errors that occurred during the request
       console.error('Error:', error.message);
     }
   }
 
-  async function getTotalCash() {
-    const res = await axios.get('http://127.0.0.1:3001/cash')
-    console.log(res)
-
-    setCash(Number(res.data))
+  async function getTransactions() {
+    try {
+      const response = await axios.get('http://127.0.0.1:3001/api/v1/transactions');
+      setTransactions(response.data.transactions)
+    } catch (error: any) {
+      // Handle any errors that occurred during the request
+      console.error('Error:', error.message);
+    }
   }
 
-  useEffect(() => {
-    getTestAccount();
-    getTotalCash()
-  }, []);
+  async function getCategories() {
+    try {
+      const response = await axios.get('http://127.0.0.1:3001/api/v1/categories');
+      setCategories(response.data.categories)
+    } catch (error: any) {
+      // Handle any errors that occurred during the request
+      console.error('Error:', error.message);
+    }
+  }
+
+  // useEffect(() => {
+  // }, []);
 
   return (
     <>
@@ -89,9 +101,9 @@ export default function DashboardPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+2350</div>
+                    <div className="text-2xl font-bold">{debt}</div>
                     <p className="text-xs text-muted-foreground">
-                      +180.1% from last month
+                      +10% from last month
                     </p>
                   </CardContent>
                 </Card>
@@ -100,7 +112,7 @@ export default function DashboardPage() {
                     <CardTitle className="text-sm font-medium">Netwoth</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">+12,234</div>
+                    <div className="text-2xl font-bold">{cash - debt}</div>
                     <p className="text-xs text-muted-foreground">
                       +19% from last month
                     </p>
@@ -125,7 +137,7 @@ export default function DashboardPage() {
                   </CardHeader>
                   <CardContent>
                     <ScrollArea className="rounded-md h-[400px]">
-                      <RecentSales />
+                      <RecentTransactions />
                     </ScrollArea>
                   </CardContent>
                 </Card>
