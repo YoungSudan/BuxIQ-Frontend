@@ -10,7 +10,6 @@ import { UserNav } from "@/components/user-nav"
 
 import AccountList from "@/components/accountList"
 import {ExpenseOverview}  from "@/components/expenseOverview"
-import ExpenseTracker from "@/components/expenseTracker"
 import { Badge } from "@/components/ui/badge"
 import axios from 'axios'
 import { useCallback, useEffect, useState } from "react"
@@ -19,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import PlaidLink from "@/components/plaidLink"
 import useBalances from "@/hooks/getBalances"
 import useMonthly from "@/hooks/getMonthly"
+import { ChartDemo } from "@/components/chartDemo"
 
 
 // import TeamSwitcher from "@/components/team-switcher"
@@ -74,6 +74,7 @@ export default function DashboardPage() {
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+            {<PlaidLink/> && localStorage.getItem("authToken") !== null}
             <div className="flex items-center space-x-2">
               {/* <CalendarDateRangePicker /> */}
               <UserNav />
@@ -84,7 +85,6 @@ export default function DashboardPage() {
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="accounts">Accounts</TabsTrigger>
               <TabsTrigger value="expenses">Expenses</TabsTrigger>
-              <PlaidLink/>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -154,7 +154,7 @@ export default function DashboardPage() {
                   <CardHeader>
                     <CardTitle>Recent Transactions</CardTitle>
                     <CardDescription>
-                      120 transactions made this month
+                      50 latest transactions
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -173,9 +173,9 @@ export default function DashboardPage() {
                       Accounts
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="flex flex-row justify-center justify-evenly">
+                  <CardContent className="grid grid-cols-3 gap-5 max-h-500">
                     <AccountList/>
-                    <ExpenseTracker/>
+                    <ChartDemo/>
                     <ExpenseOverview/>  
                   </CardContent>
                 </Card>

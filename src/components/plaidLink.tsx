@@ -8,6 +8,7 @@ import {
     PlaidLinkOnSuccessMetadata,
   } from 'react-plaid-link';
 import axios from 'axios';
+import { Button } from './ui/button';
 
   
 const PlaidLink = () => {
@@ -64,9 +65,9 @@ const PlaidLink = () => {
 
   return (
     <div>
-      <button onClick={()=>{open()}}>
+      <Button onClick={()=>{open()}}>
         Connect Bank
-      </button>
+      </Button>
     </div>
   );
 };

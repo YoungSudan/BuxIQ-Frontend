@@ -87,10 +87,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
       </div>
       <Button variant="outline" type="button" disabled={isLoading}>
-        {isLoading &&
-          <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-        }
-        {"GitHub"}
+        {"Sign Up"}
       </Button>
     </div>
   )

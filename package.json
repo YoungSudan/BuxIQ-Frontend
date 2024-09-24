@@ -37,7 +37,7 @@
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",
     "react-plaid-link": "^3.6.0",
-    "recharts": "^2.12.2",
+    "recharts": "^2.12.7",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7"
   },

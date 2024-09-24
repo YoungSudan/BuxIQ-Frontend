@@ -1,49 +1,143 @@
 "use client"
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle} from "./ui/card"
+import { Bar, BarChart, Label, Rectangle, ReferenceLine, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { Progress } from "./ui/progress"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { Button } from "./ui/button"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart"
 
 
 export function ExpenseOverview() {
-  const [categories, setCategories] = useState([])
-
-    const getCategories= async () => {
-        try {
-          // Make the GET request using Axios
-          const response = await axios.get('http://127.0.0.1:3001/accounts');
-    
-          // Handle the response data as needed
-          setCategories(response.data.accounts)
-        } catch (error: any) {
-          // Handle any errors that occurred during the request
-          console.error('Error:', error.message);
-        }
-      }
-    
-      // useEffect(() => {
-      //   getCategories()
-      // }, [])
-
-      const progressPercentage = Math.max((65.00 / 100.00) * 100, 0);
-    return (
-      <Card className="p-4">
-        <p>Monthly Budget Tracker</p>
-        <div className="mt-4">
-          <p>Initial Budget: ${100.00}</p>
-          <p>Amount Spent: ${65.00}</p>
-          <p>Remaining Budget: ${35.00}</p>
-        </div>
-        <Progress value={progressPercentage} className="mt-4" />
-        <Button
-          className="mt-4"
-          onClick={() => alert(`You have $${35.00} left this month.`)}
+  return (
+    <Card
+      className="lg:max-w-md" x-chunk="charts-01-chunk-0"
+    >
+      <CardHeader className="space-y-0 pb-2">
+        <CardDescription>Today</CardDescription>
+        <CardTitle className="text-4xl tabular-nums">
+          $56{" "}
+          <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
+            CAD
+          </span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer
+          config={{
+            steps: {
+              label: "Steps",
+              color: "hsl(var(--chart-1))",
+            },
+          }}
         >
-          Check Remaining Budget
-        </Button>
-      </Card>
-    )
+          <BarChart
+            accessibilityLayer
+            margin={{
+              left: -4,
+              right: -4,
+            }}
+            data={[
+              {
+                date: "2024-01-01",
+                steps: 2000,
+              },
+              {
+                date: "2024-01-02",
+                steps: 2100,
+              },
+              {
+                date: "2024-01-03",
+                steps: 2200,
+              },
+              {
+                date: "2024-01-04",
+                steps: 1300,
+              },
+              {
+                date: "2024-01-05",
+                steps: 1400,
+              },
+              {
+                date: "2024-01-06",
+                steps: 2500,
+              },
+              {
+                date: "2024-01-07",
+                steps: 1600,
+              },
+            ]}
+          >
+            <Bar
+              dataKey="steps"
+              fill="var(--color-steps)"
+              radius={5}
+              fillOpacity={0.6}
+              activeBar={<Rectangle fillOpacity={0.8} />}
+            />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={4}
+              tickFormatter={(value) => {
+                return new Date(value).toLocaleDateString("en-US", {
+                  weekday: "short",
+                })
+              }}
+            />
+            <ChartTooltip
+              defaultIndex={2}
+              content={
+                <ChartTooltipContent
+                  hideIndicator
+                  labelFormatter={(value) => {
+                    return new Date(value).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })
+                  }}
+                />
+              }
+              cursor={false}
+            />
+            <ReferenceLine
+              y={1200}
+              stroke="hsl(var(--muted-foreground))"
+              strokeDasharray="3 3"
+              strokeWidth={1}
+            >
+              <Label
+                position="insideBottomLeft"
+                value="Average Steps"
+                offset={10}
+                fill="hsl(var(--foreground))"
+              />
+              <Label
+                position="insideTopLeft"
+                value="12,343"
+                className="text-lg"
+                fill="hsl(var(--foreground))"
+                offset={10}
+                startOffset={100}
+              />
+            </ReferenceLine>
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter className="flex-col items-start gap-1">
+        <CardDescription>
+          Over the past 7 days, you have spent{" "}
+          <span className="font-medium text-foreground">$200</span> dollars.
+        </CardDescription>
+        <CardDescription>
+          You can spend{" "}
+          <span className="font-medium text-foreground">$100</span> more
+          dollars to reach your spending limit.
+        </CardDescription>
+      </CardFooter>
+    </Card>
+  )
 }
