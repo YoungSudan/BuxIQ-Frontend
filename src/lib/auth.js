@@ -15,8 +15,6 @@ export const login = async (credentials) => {
   try {
     const response = await axios.post(`${API_URL}/login`, credentials);
     const token = response.headers.authorization;
-
-    //axios.defaults.headers.common['Authorization'] = token;
     localStorage.setItem("authToken", token);
 
     return response.data;
@@ -32,9 +30,7 @@ export const logout = async () => {
         Authorization: localStorage.getItem("authToken"),
       },
     });
-    //delete axios.defaults.headers.common['Authorization'];
     localStorage.removeItem("authToken");
-
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message);
@@ -43,7 +39,11 @@ export const logout = async () => {
 
 export const getCurrentUser = async () => {
   try {
-    const response = await axios.get(`${API_URL}api/v1/me`);
+    const response = await axios.get(`${API_URL}/api/v1/me`, {
+      headers: {
+        Authorization: localStorage.getItem("authToken"),
+      },
+    });
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message);

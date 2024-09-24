@@ -21,7 +21,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-
     const res = await login({
         user: {
           email: email,
@@ -30,7 +29,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       })
     
     router.push('/')
-    
     setTimeout(() => {
       setIsLoading(false)
     }, 3000)

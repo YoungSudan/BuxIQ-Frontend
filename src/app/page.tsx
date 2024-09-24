@@ -13,21 +13,24 @@ import {ExpenseOverview}  from "@/components/expenseOverview"
 import ExpenseTracker from "@/components/expenseTracker"
 import { Badge } from "@/components/ui/badge"
 import axios from 'axios'
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import AccountSummary from "@/components/accountsSummary"
+import { Button } from "@/components/ui/button"
+import PlaidLink from "@/components/plaidLink"
+
 
 // import TeamSwitcher from "@/components/team-switcher"
 // import { MainNav } from "@/components/main-nav"
 // import { Search } from "@/components/search"
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
   const [accounts, setAccounts] = useState([])
   const [transactions, setTransactions] = useState([])
   const [categories, setCategories] = useState([])
 
   const [cash, setCash] = useState(0)
   const [debt, setDebt] = useState(0)
-
+  const [linkToken, setLinkToken] = useState('')
 
   async function getAccounts() {
     try {
@@ -59,9 +62,6 @@ export default function DashboardPage() {
     }
   }
 
-  // useEffect(() => {
-  // }, []);
-
   return (
     <>
       <div className="hidden flex-col md:flex">
@@ -78,6 +78,7 @@ export default function DashboardPage() {
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="accounts">Accounts</TabsTrigger>
               <TabsTrigger value="expenses">Expenses</TabsTrigger>
+              <PlaidLink/>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
