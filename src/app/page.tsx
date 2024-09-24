@@ -17,20 +17,24 @@ import { useCallback, useEffect, useState } from "react"
 import AccountSummary from "@/components/accountsSummary"
 import { Button } from "@/components/ui/button"
 import PlaidLink from "@/components/plaidLink"
+import useBalances from "@/hooks/getBalances"
 
 
 // import TeamSwitcher from "@/components/team-switcher"
 // import { MainNav } from "@/components/main-nav"
 // import { Search } from "@/components/search"
 
-export default async function DashboardPage() {
+export default function DashboardPage() {
   const [accounts, setAccounts] = useState([])
   const [transactions, setTransactions] = useState([])
   const [categories, setCategories] = useState([])
 
   const [cash, setCash] = useState(0)
   const [debt, setDebt] = useState(0)
-  const [linkToken, setLinkToken] = useState('')
+  const [loans, setloans] = useState(0)
+  const [inventments, setInvestments] = useState(0)
+
+  const { balances } = useBalances();
 
   async function getAccounts() {
     try {
@@ -85,11 +89,11 @@ export default async function DashboardPage() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Total Cash
+                      Cash
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">${cash}</div>
+                    <div className="text-2xl font-bold">${balances.cash}</div>
                     <Badge className="bg-[#65a30d]">
                       +20.1%
                     </Badge>
@@ -98,25 +102,40 @@ export default async function DashboardPage() {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Debt
+                      Credit Debt
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{debt}</div>
-                    <p className="text-xs text-muted-foreground">
-                      +10% from last month
-                    </p>
+                    <div className="text-2xl font-bold">${balances.debt}</div>
+                    <Badge className="bg-[#65a30d]">
+                      +20.1%
+                    </Badge>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Netwoth</CardTitle>
+                    <CardTitle className="text-sm font-medium">
+                      Loan
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{cash - debt}</div>
-                    <p className="text-xs text-muted-foreground">
-                      +19% from last month
-                    </p>
+                    <div className="text-2xl font-bold">${balances.loans}</div>
+                    <Badge className="bg-[#65a30d]">
+                      +20.1%
+                    </Badge>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Investment
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">${balances.investments}</div>
+                    <Badge className="bg-[#65a30d]">
+                      +20.1%
+                    </Badge>
                   </CardContent>
                 </Card>
               </div>
