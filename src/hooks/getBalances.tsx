@@ -20,9 +20,7 @@ const useBalances = () => {
                     }
                 });
 
-                console.log("Balances: ", response)
                 const data = response.data
-
                 setBalances({
                     cash: data.cash,
                     debt: data.debt,

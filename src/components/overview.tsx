@@ -1,5 +1,6 @@
 "use client"
 
+import useMonthly from "@/hooks/getMonthly"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 
 const data = [
@@ -54,9 +55,11 @@ const data = [
 ]
 
 export function Overview() {
+  const {monthly} = useMonthly()
+
   return (
     <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={data}>
+      <BarChart data={monthly.slice(0,10)}>
         <XAxis
           dataKey="name"
           stroke="#888888"

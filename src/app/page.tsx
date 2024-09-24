@@ -18,6 +18,7 @@ import AccountSummary from "@/components/accountsSummary"
 import { Button } from "@/components/ui/button"
 import PlaidLink from "@/components/plaidLink"
 import useBalances from "@/hooks/getBalances"
+import useMonthly from "@/hooks/getMonthly"
 
 
 // import TeamSwitcher from "@/components/team-switcher"
@@ -35,6 +36,7 @@ export default function DashboardPage() {
   const [inventments, setInvestments] = useState(0)
 
   const { balances } = useBalances();
+
 
   async function getAccounts() {
     try {
