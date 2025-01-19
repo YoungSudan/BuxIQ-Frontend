@@ -2,10 +2,6 @@
 
 import { Bar, BarChart, Label, Rectangle, ReferenceLine, ResponsiveContainer, XAxis, YAxis } from "recharts"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
-import { Progress } from "./ui/progress"
-import { useEffect, useState } from "react"
-import axios from "axios"
-import { Button } from "./ui/button"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart"
 
 

@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import axios from "axios"
 import { cn } from "@/lib/utils"
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { Button } from "@/components/ui/button"
@@ -18,7 +17,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [password, setPassword] = React.useState('')
   const router = useRouter();
 
-
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const res = await login({
@@ -27,11 +25,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           password: password,
         }
       })
-    
-    router.push('/')
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
+
+    router.push('/dashboard')
   }
 
   return (
@@ -86,7 +81,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <Button variant="outline" type="button" disabled={isLoading}>
+      <Button variant="outline" type="button" onClick={()=>{router.push('/signup')}}>
         {"Sign Up"}
       </Button>
     </div>

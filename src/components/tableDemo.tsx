@@ -9,8 +9,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import axios from "axios";
-import { useEffect, useState } from "react";
+import useAccounts from "@/hooks/getAccounts";
   
   const invoices = [
     {
@@ -57,31 +56,8 @@ import { useEffect, useState } from "react";
     },
   ]
 
-
-  
   export function TableDemo() {
-    const [accounts, setAccounts] = useState([])
-
-    const getAccounts = async () => {
-      try {
-        // Make the GET request using Axios
-        const response = await axios.get('http://127.0.0.1:3001/api/v1/accounts',{
-          headers: {
-            Authorization: localStorage.getItem("authToken"),
-          }
-        });
-        console.log("DATA: ",response.data)
-        setAccounts(response.data)
-      } catch (error: any) {
-        // Handle any errors that occurred during the request
-        console.error('Error:', error.message);
-      }
-    }
-  
-    useEffect(() => {
-      getAccounts()
-    }, [])
-
+    const {accounts} = useAccounts()
     return (
       <ScrollArea className="rounded-md h-[500px]">
         <Table>

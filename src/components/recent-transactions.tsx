@@ -2,29 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-const axios = require('axios');
+import useTransactions from "@/hooks/getTransactions";
 
 export function RecentTransactions() {
-  const [data, setData] = useState([])
-
-  const getTransactions = async () => {
-    const res = await axios.get('http://localhost:3001/api/v1/transactions',{
-      headers: {
-        'Authorization': localStorage.getItem('authToken')
-      }
-    })
-
-    setData(res.data)
-  }
-
-  useEffect(() => {
-    getTransactions()
-  }, [])
-
+  const {transactions} = useTransactions()
 
   const transactionItem = (trans: any) => {
     return (
-      <div className="flex items-center">
+      <div className="flex items-center" key={trans.id}>
         <Avatar className="h-9 w-9">
           <AvatarImage src={trans.personal_finance_category_icon_url} alt="Avatar" />
           <AvatarFallback>BI</AvatarFallback>
@@ -41,7 +26,7 @@ export function RecentTransactions() {
   }
   return (
       <div className="space-y-8">
-        {data.map((trans) => {
+        {transactions.map((trans) => {
           return (
             transactionItem(trans)
           )

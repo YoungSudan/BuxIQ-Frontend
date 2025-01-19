@@ -11,62 +11,18 @@ import { UserNav } from "@/components/user-nav"
 import AccountList from "@/components/accountList"
 import {ExpenseOverview}  from "@/components/expenseOverview"
 import { Badge } from "@/components/ui/badge"
-import axios from 'axios'
 import { useCallback, useEffect, useState } from "react"
 import AccountSummary from "@/components/accountsSummary"
-import { Button } from "@/components/ui/button"
 import PlaidLink from "@/components/plaidLink"
 import useBalances from "@/hooks/getBalances"
-import useMonthly from "@/hooks/getMonthly"
 import { ChartDemo } from "@/components/chartDemo"
-
 
 // import TeamSwitcher from "@/components/team-switcher"
 // import { MainNav } from "@/components/main-nav"
 // import { Search } from "@/components/search"
 
 export default function DashboardPage() {
-  const [accounts, setAccounts] = useState([])
-  const [transactions, setTransactions] = useState([])
-  const [categories, setCategories] = useState([])
-
-  const [cash, setCash] = useState(0)
-  const [debt, setDebt] = useState(0)
-  const [loans, setloans] = useState(0)
-  const [inventments, setInvestments] = useState(0)
-
   const { balances } = useBalances();
-
-
-  async function getAccounts() {
-    try {
-      const response = await axios.get('http://127.0.0.1:3001/api/v1/accounts');
-      setAccounts(response.data.accounts)
-    } catch (error: any) {
-      // Handle any errors that occurred during the request
-      console.error('Error:', error.message);
-    }
-  }
-
-  async function getTransactions() {
-    try {
-      const response = await axios.get('http://127.0.0.1:3001/api/v1/transactions');
-      setTransactions(response.data.transactions)
-    } catch (error: any) {
-      // Handle any errors that occurred during the request
-      console.error('Error:', error.message);
-    }
-  }
-
-  async function getCategories() {
-    try {
-      const response = await axios.get('http://127.0.0.1:3001/api/v1/categories');
-      setCategories(response.data.categories)
-    } catch (error: any) {
-      // Handle any errors that occurred during the request
-      console.error('Error:', error.message);
-    }
-  }
 
   return (
     <>
@@ -74,7 +30,7 @@ export default function DashboardPage() {
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-            {<PlaidLink/> && localStorage.getItem("authToken") !== null}
+            {<PlaidLink/>}
             <div className="flex items-center space-x-2">
               {/* <CalendarDateRangePicker /> */}
               <UserNav />

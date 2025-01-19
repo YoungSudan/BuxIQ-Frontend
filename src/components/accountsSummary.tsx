@@ -89,7 +89,7 @@ export default function AccountSummary() {
 
     const transactionItem = (trans: any) => {
         return (
-            <div className="flex items-center">
+            <div className="flex items-center" key={trans.id}>
                 <Avatar className="h-9 w-9">
                     <AvatarFallback>BI</AvatarFallback>
                 </Avatar>

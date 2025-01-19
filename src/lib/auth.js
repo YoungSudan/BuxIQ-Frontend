@@ -15,7 +15,6 @@ export const login = async (credentials) => {
   try {
     const response = await axios.post(`${API_URL}/login`, credentials);
     const token = response.headers.authorization;
-    localStorage.setItem("authToken", token);
 
     return response.data;
   } catch (error) {
@@ -30,7 +29,7 @@ export const logout = async () => {
         Authorization: localStorage.getItem("authToken"),
       },
     });
-    localStorage.removeItem("authToken");
+
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message);
@@ -38,6 +37,7 @@ export const logout = async () => {
 };
 
 export const getCurrentUser = async () => {
+  const token = null
   try {
     const response = await axios.get(`${API_URL}/api/v1/me`, {
       headers: {
@@ -46,6 +46,7 @@ export const getCurrentUser = async () => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message);
+    console.log(error.response.data.message)
+    return null
   }
 };
