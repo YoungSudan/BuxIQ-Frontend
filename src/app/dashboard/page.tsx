@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { UserNav } from "@/components/user-nav"
 
 import AccountList from "@/components/accountList"
-import {ExpenseOverview}  from "@/components/expenseOverview"
+import {MonthCategorySpending}  from "@/components/expenseOverview"
 import { Badge } from "@/components/ui/badge"
 import { useCallback, useEffect, useState } from "react"
 import AccountSummary from "@/components/accountsSummary"
@@ -132,7 +132,7 @@ export default function DashboardPage() {
                   <CardContent className="grid grid-cols-3 gap-5 max-h-500">
                     <AccountList/>
                     <ChartDemo/>
-                    <ExpenseOverview/>  
+                    <MonthCategorySpending category="Food" amount={100} />
                   </CardContent>
                 </Card>
               </div>

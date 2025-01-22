@@ -13,35 +13,39 @@ import { Button } from './ui/button';
   
 const PlaidLink = () => {
   const [linkToken, setLinkToken] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getLinkToken = async () => {
+      // Prevent multiple calls if already loading or if we already have a token
+      if (isLoading || linkToken) return;
+      
+      setIsLoading(true);
       try {
-        const response = await axios.get('http://127.0.0.1:3001/plaid/create_link_token',{
-            headers: {
-              Authorization: localStorage.getItem("authToken"),
-            },
-          });
+        const response = await axios.get('http://127.0.0.1:3001/plaid/create_link_token', {
+          headers: {
+            Authorization: localStorage.getItem("authToken"),
+          },
+        });
         
         const { link_token } = response.data;
-        
         setLinkToken(link_token);
-    } catch (error: any) {
-        // Handle any errors that occurred during the request
+      } catch (error: any) {
         console.error('Error:', error.message);
+      } finally {
+        setIsLoading(false);
       }
     }
-    getLinkToken()
-  }, []);
+    getLinkToken();
+  }, [linkToken, isLoading]); // Add dependencies to control re-renders
 
 
   const onSuccess = useCallback<PlaidLinkOnSuccess>(
     async (public_token, metadata) => {
       try {
-        const response = await axios.post('http://127.0.0.1:3001/plaid/exchange_public_token',{
-            data: {
-                "public_token": public_token
-            }, 
+        const response = await axios.post('http://127.0.0.1:3001/plaid/exchange_public_token', {
+            public_token: public_token
+        }, {
             headers: {
                 Authorization: localStorage.getItem("authToken"),
             }
@@ -65,7 +69,7 @@ const PlaidLink = () => {
 
   return (
     <div>
-      <Button onClick={()=>{open()}}>
+      <Button onClick={() => open()}>
         Connect Bank
       </Button>
     </div>

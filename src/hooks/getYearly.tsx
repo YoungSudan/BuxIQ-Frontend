@@ -3,20 +3,20 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useMonthly = () => {
-    const [monthly, setMonthly] = useState([]);
+const useYearly = () => {
+    const [yearly, setYearly] = useState([]);
 
     useEffect(() => {
         const fetchMonthly = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:3001/api/v1/me/monthly', {
+                const response = await axios.get('http://127.0.0.1:3001/api/v1/me/yearly_spending?year=2024', {
                     headers: {
                         Authorization: localStorage.getItem("authToken"),
                     }
                 });
 
                 const data = response.data
-                setMonthly(data);
+                setYearly(data);
             } catch (error) {
                 console.log(error)
             } finally {
@@ -26,7 +26,7 @@ const useMonthly = () => {
         fetchMonthly();
     }, []);
 
-    return { monthly };
+    return { yearly };
 };
 
-export default useMonthly;
+export default useYearly;

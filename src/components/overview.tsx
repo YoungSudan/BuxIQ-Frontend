@@ -1,14 +1,14 @@
 "use client"
 
-import useMonthly from "@/hooks/getMonthly"
+import useYearly from "@/hooks/getYearly"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 
 export function Overview() {
-  const { monthly } = useMonthly()
-
+  const { yearly } = useYearly()
+  
   return (
     <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={monthly.slice(0,10)}>
+      <BarChart data={yearly}>
         <XAxis
           dataKey="name"
           stroke="#888888"
@@ -22,7 +22,6 @@ export function Overview() {
           tickLine={false}
           axisLine={false}
           tickFormatter={(value) => `$${value}`}
-          tickCount={1000}
         />
         <Bar
           dataKey="total"

@@ -9,7 +9,7 @@ const useTransactions = () => {
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/api/v1/transactions', {
+                const response = await axios.get('http://localhost:3001/api/v1/me/transactions', {
                     headers: {
                         Authorization: localStorage.getItem("authToken"),
                     }

@@ -4,14 +4,18 @@ import { Bar, BarChart, Label, Rectangle, ReferenceLine, ResponsiveContainer, XA
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart"
 
+interface MonthCategorySpendingProps {
+  category: string;
+  amount: number;
+}
 
-export function ExpenseOverview() {
+export function MonthCategorySpending({ category, amount }: MonthCategorySpendingProps) {
   return (
     <Card
       className="lg:max-w-md" x-chunk="charts-01-chunk-0"
     >
       <CardHeader className="space-y-0 pb-2">
-        <CardDescription>Today</CardDescription>
+        <CardDescription>{category}</CardDescription>
         <CardTitle className="text-4xl tabular-nums">
           $56{" "}
           <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
